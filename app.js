@@ -74,6 +74,14 @@ app.post("/signup",async(req,res)=>{
         
     })
 
+    app.post("/addbus",(req,res)=>{
+        let input = req.body
+        let buss = new busmodel(input)
+        buss.save()
+        res.json({"status":"ADDED"})
+        })
+    
+
     app.listen(8805,()=>{
         console.log("server started")
     })
