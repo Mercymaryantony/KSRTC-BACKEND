@@ -26,7 +26,7 @@ app.post("/login",(req,res)=>{
                 console.log(dbpass)
                 bcrypt.compare(input.pass,dbpass,(error,isMatch)=>{
                     if (isMatch) {
-                        jwt.sign({email:input.emailid},"blog-app",{expiresIn:"1d"},
+                        jwt.sign({email:input.emailid},"ksrtc-uesr-app",{expiresIn:"1d"},
                             (error,token)=>{
                             if (error) {
                                 res.json({"status":"unable to create token"})
@@ -47,10 +47,30 @@ app.post("/signup",async(req,res)=>{
     let input = req.body
     let hashedpswd=await generatepswd(input.pass)
     console.log(hashedpswd)
+
     input.pass=hashedpswd
     let users = new usermodel(input)
     users.save()
     res.json({"status":"SIGNUP"})
+    })
+
+    app.post("/viewusers",(req,res)=>{
+        let token = req.headers["token"]
+        jwt.verify(token,"ksrtc-user-app",(error,decoded)=>{
+            if (error) {
+                res.json({"status":"unauthorized access"})
+            } else {
+                if(decoded)
+                    {
+                        usermodel.find().then(
+                            (response)=>{
+                                res.json(response)
+                            }
+                        ).catch()
+                    }
+            }
+        })
+        
     })
 
     app.listen(8805,()=>{
