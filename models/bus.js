@@ -6,5 +6,5 @@ const schema = mongoose.Schema({
     "route":String
     
 })
-let usermodel = mongoose.model("users",schema)
-module.exports={usermodel}
+let busmodel = mongoose.model("buss",schema)
+module.exports={busmodelmodel}

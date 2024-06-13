@@ -11,6 +11,7 @@ mongoose.connect("mongodb+srv://mercy1112:mercy1112@cluster0.8x8j3ya.mongodb.net
 
 
 const {usermodel}=require("./models/user")
+const {busmodel}=require("./models/buss")
 
 const generatepswd = async(pswd)=>{
     const salt =await bcrypt.genSalt(4)
