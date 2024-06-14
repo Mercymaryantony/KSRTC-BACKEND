@@ -7,4 +7,4 @@ const schema = mongoose.Schema({
     
 })
 let busmodel = mongoose.model("buss",schema)
-module.exports={busmodelmodel}
+module.exports={busmodel}
