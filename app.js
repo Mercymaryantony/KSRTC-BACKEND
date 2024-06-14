@@ -80,6 +80,27 @@ app.post("/signup",async(req,res)=>{
         buss.save()
         res.json({"status":"ADDED"})
         })
+
+        app.post("/search",(req,res)=>{
+            let input = req.body
+            busmodel.find(input).then((data)=>{
+                res.json(data)
+            }).catch((error)=>{
+                res.send("error")
+            })
+        })
+
+        app.post("/delete",(req,res)=>{
+            let input = req.body
+            busmodel.findByIdAndDelete(input._id).then(
+                (response)=>{
+                    res.json({"status":"deleted"})
+                }
+            ).catch((error)=>{
+                res.json({"status":"error"})
+            })
+        
+        })
     
 
     app.listen(8805,()=>{
