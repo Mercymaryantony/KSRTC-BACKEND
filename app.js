@@ -10,6 +10,7 @@ app.use(express.json())
 mongoose.connect("mongodb+srv://mercy1112:mercy1112@cluster0.8x8j3ya.mongodb.net/ksrtcuserDB?retryWrites=true&w=majority&appName=Cluster0")
 
 
+
 const {usermodel}=require("./models/user")
 const {busmodel}=require("./models/bus")
 
@@ -20,7 +21,7 @@ const generatepswd = async(pswd)=>{
 
 app.post("/login",(req,res)=>{
     let input=req.body
-    usermodel.find({"emailid":req.body.email}).then(
+    usermodel.find({"emailid":req.body.emailid}).then(
         (response)=>{
             if(response.length>0){
                 let dbpass = response[0].pass
@@ -39,6 +40,9 @@ app.post("/login",(req,res)=>{
                         res.json({"status":"incorrect password"})
                     }
                 })
+            }
+            else{
+                res.json({"status":"user not found"})
             }
         }
     )
@@ -102,6 +106,11 @@ app.post("/signup",async(req,res)=>{
         
         })
     
+        app.post("/view",(req,res)=>{
+            busmodel.find().then((data)=>{
+                res.json(data)
+            }).catch((error)=>res.send("error"))
+        })
 
     app.listen(8805,()=>{
         console.log("server started")
